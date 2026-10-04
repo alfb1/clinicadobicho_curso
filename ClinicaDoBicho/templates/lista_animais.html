@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Animais</h1>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Especie</th>
+            <th>Raça</th>
+        </tr>
+        {% for animal in animais %}
+        <tr>
+            <td>{{ animal.nome }}</td>
+            <td>{{ animal.get_especial_display }}</td>
+            <td>{{ animal.raca }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

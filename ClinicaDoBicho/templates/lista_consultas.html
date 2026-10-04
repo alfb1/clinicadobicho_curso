@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center">
+
+   <h1>Lista de Consultas</h1>
+    <button class="btn btn-success mb-3" 
+            onclick="window.location.href='{% url 'agendar_consulta' %}' ">
+        Agendar consulta
+    </button> 
+</div>
+<h1 class="mb-4">Consultas agendadas:</h1>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Animal</th>
+            <th>Veterinário</th>
+            <th>Data</th>
+            <th>Motivo</th>
+            <th>Observaçoes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <td>{{ consulta.animal.nome }}</td>
+            <td>{{ consulta.veterinario.nome }}</td>
+            <td>{{ consulta.data|date:"d/m/Y H:i" }}</td>
+            <td>{{ consulta.motivo }}</td>
+            <td>{{ consulta.observacoes }}</td>
+        </tr>
+ 
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center">Nenhuma consulta cadastrada</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+

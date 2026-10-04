@@ -1,0 +1,23 @@
+ {% extends 'base.html' %}
+ 
+ {% block content %}
+ <div class="d-flex gap-2 justify-content-center align-items-center" style="height: 80vh;" >
+     <div class="card text-center shadow p-4" style="width: 18rem;">
+        <div class="card-body">
+           <h5 class="card-title">
+              Consultas
+           </h5>
+           <a href="{% url 'lista_consultas' %}" class="btn btn-primary">Consultas</a>
+        </div>
+     </div>
+     <div class="card text-center shadow p-4" style="width: 18rem;">
+        <div class="card-body">
+           <h5 class="card-title">
+              Animais
+           </h5>
+           <a href="{% url 'lista_animais' %}" class="btn btn-primary">Animais</a>
+        </div>
+     </div>
+ </div>
+ {% endblock %}
+
