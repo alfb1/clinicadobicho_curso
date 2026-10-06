@@ -1,5 +1,5 @@
 from django import forms
-from .models  import Consulta
+from .models  import Consulta, Animal
 
 class ConsultaForm(forms.ModelForm):
     class Meta:
@@ -33,3 +33,16 @@ class ConsultaForm(forms.ModelForm):
         #    raise forms.ValidationError('Já existe uma consulta agendada neste horário para este veterinário.')
         
         return cleaned_data
+
+# Formulário para o modelo Animal
+class AnimalForm(forms.ModelForm):
+    class Meta:
+        model = Animal
+        fields = ['nome', 'especie', 'raca', 'idade', 'peso']
+        widgets = {
+            'nome': forms.TextInput(attrs={'calss':'form-control'}),
+            'idade': forms.NumberInput(attrs={'calss':'form-control'}),
+            'especie': forms.Select(attrs={'calss':'form-control'}),
+            'raca': forms.TextInput(attrs={'calss':'form-control'}),
+            'peso': forms.NumberInput(attrs={'calss':'form-control'}),
+        }
