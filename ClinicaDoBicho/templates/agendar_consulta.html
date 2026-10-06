@@ -31,12 +31,22 @@
 </div>
 
 <!-- Animais do cliente-->
- 
 <div class="d-flex justify-content-between align-items-center mb-3">
    <h5 class="card-title mb-0">Pets</h5>
    <a href="" class="btn btn-warning btn-sm">+ Adicionar animal</a>
 </div>
 {% endif %}
+
+<!-- Lista de animais -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+   <h5 class="card-title mb-0">Pets</h5>
+   <button type="button" 
+           class="btn btn-sm btn-success" 
+           data-bs-toggle="modal" 
+           data-bs-target="#animalModal">
+      + Adicionar Pet
+   </button>
+</div>
 
 {% if animais %}
   <ul class="list-unstyled">
@@ -51,17 +61,20 @@
 {% else %}
   <p class="text-muted">Não existem animais cadastrados ainda.</p>
 {% endif %}
+
+{% include 'add_animal_modal.html' %}
 <hr>
 <!--- Jquery-->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
- $(document).ready(function() {
-       $('.select-animal-btn').click(function() {
-       var animalId = $(this).data('animal-id');
-       $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
- });
 
- });
+<script>
+   $(document).ready(function() {
+         $('.select-animal-btn').click(function() {
+         var animalId = $(this).data('animal-id');
+         $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
+   });
+
+   });
 </script>
 
 

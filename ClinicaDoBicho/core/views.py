@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from .forms import ConsultaForm, AnimalForm 

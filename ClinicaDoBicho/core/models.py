@@ -13,7 +13,7 @@ class Cliente(models.Model):
 
 class Animal(models.Model):
     ESPECIES = [
-        ('C', 'Cachorr'),
+        ('C', 'Cachorro'),
         ('G', 'Gatos'),
         ('O', 'Outros'),
     ]

@@ -1,3 +1,4 @@
+
 <!-- add_animal_modal.html -->
  <div class="modal fade" id="animalModal" tabindex="-1">
     <div class="modal-dialog">
@@ -10,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <form id="animalForm">
-                {% csrf_toke %}
+                {% csrf_token %}
                 {{ form_pet.as_p }}
                 <input type="hidden" name="cpf" value="{{ cliente.cpf }}">
                 <button type="submit" class="btn btn-primary">Salvar</button>
@@ -53,8 +54,6 @@
 <button type="button" class="btn btn-sm btn-sucess" data-bs-toggle="modal" data-bs-target="#animalModal">
     + Animal
 </button>
-
-{% include 'add_animal_modal.html' %}
 
 <script>
     $('#animalModal').on('show.bs.modal', function(){
