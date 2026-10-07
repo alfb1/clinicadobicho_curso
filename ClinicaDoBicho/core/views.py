@@ -11,6 +11,8 @@ def agendar_consulta(request):
 
     cliente = None
     animais = None 
+    form_pet = AnimalForm()
+    form = ConsultaForm()
 
     if request.method == 'POST':
     
@@ -24,8 +26,6 @@ def agendar_consulta(request):
             except Cliente.DoesNotExist:
                 messages.error(request, "Cliente não encontrado.")
 
-            form = ConsultaForm()
-
         elif "salvar" in request.POST:
             form = ConsultaForm(request.POST)
 
@@ -36,13 +36,13 @@ def agendar_consulta(request):
             else:
                 form._errors.clear()
                 messages.error(request, 'Problemas ao enviar os dados, tente novamente.') 
-    else:
-        form = ConsultaForm()
 
-    print(animais)
     return render(request, 
                   'agendar_consulta.html',
-                  {'form': form, 'cliente' : cliente, 'animais':animais} )
+                  {'form': form, 
+                   'cliente' : cliente,  
+                   'animais':animais,
+                   'form_pet' : form_pet },  )
 
 
 
