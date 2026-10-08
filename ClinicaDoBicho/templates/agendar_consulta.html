@@ -30,65 +30,68 @@
       </div>
    </div>
 
-   <!-- Animais do cliente-->
+   <!-- Lista de animais -->
    <div class="d-flex justify-content-between align-items-center mb-3">
       <h5 class="card-title mb-0">Pets</h5>
-      <a href="" class="btn btn-warning btn-sm">+ Adicionar animal</a>
+      <button type="button" 
+            class="btn btn-sm btn-success" 
+            data-bs-toggle="modal" 
+            data-bs-target="#animalModal">
+         + Adicionar Pet
+      </button>
    </div>
-{% endif %}
 
-<!-- Lista de animais -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-   <h5 class="card-title mb-0">Pets</h5>
-   <button type="button" 
-           class="btn btn-sm btn-success" 
-           data-bs-toggle="modal" 
-           data-bs-target="#animalModal">
-      + Adicionar Pet
-   </button>
-</div>
+   {% if animais %}
+   <ul class="list-unstyled" id="animalList">
+      {% for animal in animais %}
+         <li class="list-group-item">
+            <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
+            <button type="button" class="btn btn-info btn-sm select-animal-btn" 
+                     data-animal-id="{{ animal.id }}">Selectionar</button>
+         </li>
+      {% endfor %}
+   </ul>
+   {% else %}
+   <p class="text-muted">Não existem animais cadastrados ainda.</p>
+   {% endif %}
 
-{% if animais %}
-  <ul class="list-unstyled">
-     {% for animal in animais %}
-        <li class="list-group-item">
-           <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
-           <button type="button" class="btn btn-info btn-sm select-animal-btn" 
-                   data-animal-id="{{ animal.id }}">Selectionar</button>
-        </li>
-     {% endfor %}
-  </ul>
+   {% include 'add_animal_modal.html' %}
+   <hr>
+
+
+   <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" name="salvar" class="btn btn-primary"> 
+         Agendar
+      </button>
+   
+      <a href="{% url 'lista_consultas' %}" class="btn btn-secondary">Cancelar</a> 
+
+   </form>
+
+
+   <!--- Jquery-->
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+   <script>
+      $(document).ready(function() {
+            $('.select-animal-btn').click(function() {
+            var animalId = $(this).data('animal-id');
+            $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
+      });
+
+      });
+   </script>
+
 {% else %}
-  <p class="text-muted">Não existem animais cadastrados ainda.</p>
+  {% include 'add_cliente_modal.html' %}
+  <button type="button" 
+          class="btn btn-success" 
+          data-bs-toggle="modal"
+          data-bs-target="#clienteModal">
+          Adicionar Cliente 
+  </button>
 {% endif %}
-
-{% include 'add_animal_modal.html' %}
-<hr>
-
-
-<form method="post">
-   {% csrf_token %}
-   {{ form }}
-   <button type="submit" name="salvar" class="btn btn-primary"> 
-      Agendar
-   </button>
-  
-   <a href="{% url 'lista_consultas' %}" class="btn btn-secondary">Cancelar</a> 
-
-</form>
-
-
-<!--- Jquery-->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<script>
-   $(document).ready(function() {
-         $('.select-animal-btn').click(function() {
-         var animalId = $(this).data('animal-id');
-         $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
-   });
-
-   });
-</script>
 
 {% endblock %}

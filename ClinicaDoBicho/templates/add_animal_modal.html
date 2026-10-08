@@ -35,12 +35,12 @@
                 $('#animalModal').modal('hide');
                 // add new animal to list
                 let html_option = `<li class="list-group-item">
-                    <strong>${data.nome}</strong>
+                    <strong>${data.nome}</strong> / ${data.raca}
                     <button type="button" class="btn btn-info btn-sm select-animal-btn"
-                            data-animal-id="${data.id}">Selecionar></button>
+                            data-animal-id="${data.id}">Selecionar</button>
                     </li>`;
                 $('#animalList').append(html_option);
-                
+
                 let newOption = new Option(data.nome, data.id, true, true);
                 $('#id_animal').append(newOption).trigger('change');
             },

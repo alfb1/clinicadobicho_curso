@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from .forms import ConsultaForm, AnimalForm 
+from .forms import ConsultaForm, AnimalForm, ClienteForm
 from .models import Animal, Consulta, Cliente
 
 
@@ -57,7 +57,7 @@ def lista_consultas(request):
     consultas = Consulta.objects.all().order_by('data')
     return render(request, 'lista_consultas.html', {'consultas':consultas})
 
-# Adiciona animal 
+# Adiciona Animal 
 def add_animal(request):
     if request.method == 'POST':
         form = AnimalForm(request.POST)
@@ -65,13 +65,34 @@ def add_animal(request):
         if form.is_valid():
             animal = form.save(commit=False)
             cpf = request.POST.get("cpf")
-            #animal.dono = Cliente.objects.get(cpf=cpf)
-            animal.doneo = Cliente.objects.get(cpf=cpf)
+            dono = Cliente.objects.get(cpf=cpf)
+            animal.doneo =dono
             animal.save()
-            return JsonResponse({'id':animal.id, 'nome' : animal.nome})
+            # To create list agendar_consulta "Selecionar"  from add_animal_modal.html after save presssed
+            return JsonResponse({'id':animal.id, 'nome' : animal.nome, 'raca' : animal.raca})
         else:
             return JsonResponse({'errors': form.errors}, status=400)
     else:
         form = AnimalForm()
 
     return render(request, 'add_animal_modal.html', {'form':form})
+
+# Adiciona Cliente
+def add_cliente(request):
+
+    if request.method == 'POST':
+
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            cliente = form.save()
+            return JsonResponse({
+                'id':cliente.id, 
+                'nome' : cliente.nome,
+                'cpf': cliente.cpf})
+        else:
+            return JsonResponse({'errors' : form.errors}, status=400)
+
+    else:
+        form = ClienteForm()
+
+    return render(request, 'add_cliente_modal.html', {'form' : form})

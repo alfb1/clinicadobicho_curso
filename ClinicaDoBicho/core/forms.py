@@ -1,5 +1,7 @@
 from django import forms
-from .models  import Consulta, Animal
+from .models  import Consulta, Animal, Cliente
+
+# Formulário para o modulo Consulta
 
 class ConsultaForm(forms.ModelForm):
     class Meta:
@@ -40,9 +42,21 @@ class AnimalForm(forms.ModelForm):
         model = Animal
         fields = ['nome', 'especie', 'raca', 'idade', 'peso']
         widgets = {
-            'nome': forms.TextInput(attrs={'calss':'form-control'}),
-            'idade': forms.NumberInput(attrs={'calss':'form-control'}),
-            'especie': forms.Select(attrs={'calss':'form-control'}),
-            'raca': forms.TextInput(attrs={'calss':'form-control'}),
-            'peso': forms.NumberInput(attrs={'calss':'form-control'}),
+            'nome': forms.TextInput(attrs={'class':'form-control'}),
+            'idade': forms.NumberInput(attrs={'class':'form-control'}),
+            'especie': forms.Select(attrs={'class':'form-control'}),
+            'raca': forms.TextInput(attrs={'class':'form-control'}),
+            'peso': forms.NumberInput(attrs={'class':'form-control'}),
         }
+
+# Formulário para o modelo Cliente
+class ClienteForm(forms.ModelForm):
+    model = Cliente 
+    fields  = [ 'nome', 'cpf', 'telefone', 'email', 'endereco']
+    widgets = { 'endereco': forms.TextInput(attrs={'rows':3}), }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
