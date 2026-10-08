@@ -1,13 +1,19 @@
 <!-- Modal Adicionar Cliente-->
-
 <div class="modal fade" id="clienteModal" tabindex="-1">
-
     <div class="modal-dialog">
-
-        <div class="modal-content">
+        <div class="modal-content" id="modalClientContent">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Add Cliente
+                </h5>
+                <button type="button" 
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
             <form id="clientForm">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form_cliente.as_p }}
                 <button type="submit"
                         class="btn btn-primary">Salvar</button>
             </form>
@@ -16,14 +22,13 @@
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     $(document).on("submit", "#clienteForm", function(e){
         e.preventDefault();
 
         $.ajax({
 
-            url, "{% url 'add_cliente' %}",
+            url: "{% url 'add_cliente' %}",
             method: "POST",
             data: $(this).serialize(),
             success: function(response){
@@ -32,7 +37,7 @@
 
                 // setar cliente no select da tela de agendamento
                 $("#id_cliente").append(
-                    new Option(response.nome, response.id, true)
+                    new Option(response.nome, response.id, true, true)
                 ).trigger("change");
             },
             error : function(xhr){
@@ -41,4 +46,6 @@
 
         });
     });
+
+
 </script>

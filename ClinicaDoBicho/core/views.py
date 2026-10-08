@@ -11,7 +11,10 @@ def agendar_consulta(request):
 
     cliente = None
     animais = None 
+    # For add_animal_modal
     form_pet = AnimalForm()
+    # For add_cliente_modal
+    form_cliente = ClienteForm()
     form = ConsultaForm()
 
     if request.method == 'POST':
@@ -42,7 +45,8 @@ def agendar_consulta(request):
                   {'form': form, 
                    'cliente' : cliente,  
                    'animais':animais,
-                   'form_pet' : form_pet },  )
+                   'form_pet' : form_pet,
+                   'form_cliente' : form_cliente },  )
 
 
 
@@ -83,6 +87,7 @@ def add_cliente(request):
     if request.method == 'POST':
 
         form = ClienteForm(request.POST)
+
         if form.is_valid():
             cliente = form.save()
             return JsonResponse({
@@ -95,4 +100,4 @@ def add_cliente(request):
     else:
         form = ClienteForm()
 
-    return render(request, 'add_cliente_modal.html', {'form' : form})
+    return render(request, 'add_cliente_modal.html', {'formCliente' : form})

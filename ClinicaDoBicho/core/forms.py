@@ -51,9 +51,10 @@ class AnimalForm(forms.ModelForm):
 
 # Formulário para o modelo Cliente
 class ClienteForm(forms.ModelForm):
-    model = Cliente 
-    fields  = [ 'nome', 'cpf', 'telefone', 'email', 'endereco']
-    widgets = { 'endereco': forms.TextInput(attrs={'rows':3}), }
+    class Meta:
+        model = Cliente 
+        fields  = [ 'nome', 'cpf', 'telefone', 'email', 'endereco']
+        widgets = { 'endereco': forms.TextInput(attrs={'rows':3}), }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
