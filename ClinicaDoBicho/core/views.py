@@ -91,13 +91,13 @@ def add_cliente(request):
         if form.is_valid():
             cliente = form.save()
             return JsonResponse({
-                'id':cliente.id, 
-                'nome' : cliente.nome,
-                'cpf': cliente.cpf})
+                'id'  : cliente.id,
+                'cpf' : cliente.cpf })
         else:
             return JsonResponse({'errors' : form.errors}, status=400)
 
     else:
         form = ClienteForm()
+
 
     return render(request, 'add_cliente_modal.html', {'formCliente' : form})

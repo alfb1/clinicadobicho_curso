@@ -1,20 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h2>Agendar Consulta</h2>
 
 <!-- Buscar Cliente-->
 
 <form class="row g-3 mb-4" method="post">
    {% csrf_token %}
+   <input type="hidden" id="clienteIdInput" />
    <div class="col-auto">
       <label for="cpfInput" class="visually-hidden">Cliente CPF</label>
       <input type="text" class="form-control" id="cpfInput" name="cpf" placeholder="Informe o Cpf da pesquisa.">
    </div>
 
    <div class="col-auto">
-      <button type="submit" name="buscar" class="btn btn-primary">Pesquisar</button>
+      <button type="submit" name="buscar" id="searchCpfBtn" class="btn btn-primary">Pesquisar</button>
    </div>
 </form>
+
+<button type="button" 
+        class="btn btn-success" 
+        data-bs-toggle="modal"
+        data-bs-target="#clienteModal">
+        Adicionar Cliente 
+</button>
 
 {% if cliente %}
    <!-- Cliente-->
@@ -29,6 +38,7 @@
          <p><strong>Endereço:</strong>{{cliente.endereco}}</p>
       </div>
    </div>
+{% endif %}
 
    <!-- Lista de animais -->
    <div class="d-flex justify-content-between align-items-center mb-3">
@@ -72,7 +82,6 @@
 
 
    <!--- Jquery-->
-   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
    <script>
       $(document).ready(function() {
@@ -84,16 +93,9 @@
       });
    </script>
 
-{% else %}
   {% include 'add_cliente_modal.html' %}
-  <button type="button" 
-          class="btn btn-success" 
-          data-bs-toggle="modal"
-          data-bs-target="#clienteModal">
-          Adicionar Cliente 
-  </button>
 
 
-{% endif %}
+
 
 {% endblock %}

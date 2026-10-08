@@ -11,12 +11,14 @@
                     data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
-            <form id="clientForm">
-                {% csrf_token %}
-                {{ form_cliente.as_p }}
-                <button type="submit"
-                        class="btn btn-primary">Salvar</button>
-            </form>
+            <div class="modal-body">
+                <form id="clienteForm">
+                    {% csrf_token %}
+                    {{ form_cliente.as_p }}
+                    <button type="submit"
+                            class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -32,13 +34,12 @@
             method: "POST",
             data: $(this).serialize(),
             success: function(response){
-                // fehar o modal do cliente - tela de agendamento
+                // fehar o modal do cliente
                 $("#clienteModal").modal("hide");
-
-                // setar cliente no select da tela de agendamento
-                $("#id_cliente").append(
-                    new Option(response.nome, response.id, true, true)
-                ).trigger("change");
+                // setar cliente no form pesquisa cpf da tela de agendamento
+                $("#cpfInput").val(response.cpf);
+                // Faz o click no formulario de pesquisa
+                $('#searchCpfBtn').trigger('click');
             },
             error : function(xhr){
                 alert("Erro: " + xhr.responseJSON.errors);
