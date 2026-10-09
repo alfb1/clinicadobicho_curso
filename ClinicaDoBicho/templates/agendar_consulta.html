@@ -5,25 +5,25 @@
 
 <!-- Buscar Cliente-->
 
-<form class="row g-3 mb-4" method="post">
-   {% csrf_token %}
-   <input type="hidden" id="clienteIdInput" />
-   <div class="col-auto">
-      <label for="cpfInput" class="visually-hidden">Cliente CPF</label>
-      <input type="text" class="form-control" id="cpfInput" name="cpf" placeholder="Informe o Cpf da pesquisa.">
-   </div>
+   <form class="row g-3 mb-4" method="post">
+      {% csrf_token %}
+      <input type="hidden" id="clienteIdInput" />
+      <div class="col-auto">
+         <label for="cpfInput" class="visually-hidden">Cliente CPF</label>
+         <input type="text" class="form-control" id="cpfInput" name="cpf" placeholder="Informe o Cpf da pesquisa.">
+      </div>
 
-   <div class="col-auto">
-      <button type="submit" name="buscar" id="searchCpfBtn" class="btn btn-primary">Pesquisar</button>
-   </div>
-</form>
+      <div class="col-auto">
+         <button type="submit" name="buscar" id="searchCpfBtn" class="btn btn-primary">Pesquisar</button>
+      </div>
+   </form>
 
-<button type="button" 
-        class="btn btn-success" 
-        data-bs-toggle="modal"
-        data-bs-target="#clienteModal">
-        Adicionar Cliente 
-</button>
+   <button type="button" 
+         class="btn btn-success" 
+         data-bs-toggle="modal"
+         data-bs-target="#clienteModal">
+         Adicionar Cliente 
+   </button>
 
 {% if cliente %}
    <!-- Cliente-->
@@ -38,7 +38,6 @@
          <p><strong>Endereço:</strong>{{cliente.endereco}}</p>
       </div>
    </div>
-{% endif %}
 
    <!-- Lista de animais -->
    <div class="d-flex justify-content-between align-items-center mb-3">
@@ -51,23 +50,28 @@
       </button>
    </div>
 
+
    {% if animais %}
-   <ul class="list-unstyled" id="animalList">
-      {% for animal in animais %}
-         <li class="list-group-item">
-            <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
-            <button type="button" class="btn btn-info btn-sm select-animal-btn" 
-                     data-animal-id="{{ animal.id }}">Selectionar</button>
-         </li>
-      {% endfor %}
-   </ul>
+      <ul class="list-unstyled" id="animalList">
+         {% for animal in animais %}
+            <li class="list-group-item">
+               <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
+               <button type="button" class="btn btn-info btn-sm select-animal-btn" 
+                        data-animal-id="{{ animal.id }}">Selectionar</button>
+            </li>
+         {% endfor %}
+      </ul>
    {% else %}
-   <p class="text-muted">Não existem animais cadastrados ainda.</p>
+      <p class="text-muted">Não existem animais cadastrados ainda.</p>
    {% endif %}
 
    {% include 'add_animal_modal.html' %}
-   <hr>
+   
+{% endif %}
+<!-- Form Agendar -->
 
+{% if cliente and animais %}
+   <hr>
 
    <form method="post">
       {% csrf_token %}
@@ -80,9 +84,7 @@
 
    </form>
 
-
    <!--- Jquery-->
-
    <script>
       $(document).ready(function() {
             $('.select-animal-btn').click(function() {
@@ -93,7 +95,9 @@
       });
    </script>
 
-  {% include 'add_cliente_modal.html' %}
+{% endif %}
+
+{% include 'add_cliente_modal.html' %}
 
 
 

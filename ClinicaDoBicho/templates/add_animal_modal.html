@@ -14,7 +14,7 @@
                 <form id="animalForm">
                 {% csrf_token %}
                 {{ form_pet.as_p }}
-                <input type="hidden" name="cpf" value="{{ cliente.cpf }}">
+                <input type="hidden" name="cpf" id="cpfInputAnimalModal" value="{{ cliente.cpf }}">
                 <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
             </div>
@@ -32,9 +32,14 @@
             method:"POST",
             data:$(this).serialize(),
             success:function(data){
+
                 // close Modal Form
                 $('#animalModal').modal('hide');
+
+                /*
+
                 // add new animal to list
+        
                 let html_option = `<li class="list-group-item">
                     <strong>${data.nome}</strong> / ${data.raca}
                     <button type="button" class="btn btn-info btn-sm select-animal-btn"
@@ -44,23 +49,20 @@
 
                 let newOption = new Option(data.nome, data.id, true, true);
                 $('#id_animal').append(newOption).trigger('change');
+
+                */
+
+                // executa nova pesquisa no cpf do cliente agora para 
+                // trazer a lista de animais
+                $("#cpfInput").val($("#cpfInputAnimalModal").val());
+                
+                // Faz o click no formulario de pesquisa
+                $('#searchCpfBtn').trigger('click');
+
             },
             error:function(xhr){
                 alert('Erro ao adicionar animal');
             }
         });
     });
-</script>
-
-<button type="button" 
-        class="btn btn-sm btn-sucess" 
-        data-bs-toggle="modal" 
-        data-bs-target="#animalModal">
-    + Animal
-</button>
-
-<script>
-    $('#animalModal').on('show.bs.modal', function(){
-        $('#modalContent').load("{% url 'add_animal' %}");
-    })
 </script>

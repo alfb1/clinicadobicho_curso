@@ -24,7 +24,7 @@ def agendar_consulta(request):
                         
             try:
                 cliente = Cliente.objects.get(cpf=cpf)
-                animais = cliente.animais.all()
+                animais = cliente.animais.filter(doneo=cliente)
                
             except Cliente.DoesNotExist:
                 messages.error(request, "Cliente não encontrado.")
