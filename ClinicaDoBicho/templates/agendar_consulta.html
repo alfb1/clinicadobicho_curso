@@ -58,7 +58,7 @@
             <li class="list-group-item">
                <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
                <button type="button" class="btn btn-info btn-sm select-animal-btn" 
-                        id="data-animal-id_{{ animal.id }}">Selectionar</button>
+                         id="data-animal-id_{{ animal.id }}">Selectionar</button>
             </li>
          {% endfor %}
       </ul>
@@ -90,7 +90,7 @@
       $(document).ready(function() {
             $('.select-animal-btn').click(function() {
                var animalId = $(this).data('animal-id');
-               $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
+               $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta acima
                
             });
 
