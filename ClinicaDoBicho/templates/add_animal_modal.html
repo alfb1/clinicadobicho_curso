@@ -43,7 +43,7 @@
                 let html_option = `<li class="list-group-item">
                     <strong>${data.nome}</strong> / ${data.raca}
                     <button type="button" class="btn btn-info btn-sm select-animal-btn"
-                            data-animal-id="${data.id}">Selecionar</button>
+                            id="data-animal-id_${data.id}">Selecionar</button>
                     </li>`;
                 $('#animalList').append(html_option);
 
@@ -55,6 +55,7 @@
                 // executa nova pesquisa no cpf do cliente agora para 
                 // trazer a lista de animais
                 $("#cpfInput").val($("#cpfInputAnimalModal").val());
+                $("#animalIdInput").val(data.id);
                 
                 // Faz o click no formulario de pesquisa
                 $('#searchCpfBtn').trigger('click');

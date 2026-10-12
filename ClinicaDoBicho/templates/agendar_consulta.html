@@ -8,6 +8,7 @@
    <form class="row g-3 mb-4" method="post">
       {% csrf_token %}
       <input type="hidden" id="clienteIdInput" />
+      <input type="hidden" id="animalIdInput" name="animal" value="{{ id_animal }} "/>
       <div class="col-auto">
          <label for="cpfInput" class="visually-hidden">Cliente CPF</label>
          <input type="text" class="form-control" id="cpfInput" name="cpf" placeholder="Informe o Cpf da pesquisa.">
@@ -57,7 +58,7 @@
             <li class="list-group-item">
                <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
                <button type="button" class="btn btn-info btn-sm select-animal-btn" 
-                        data-animal-id="{{ animal.id }}">Selectionar</button>
+                        id="data-animal-id_{{ animal.id }}">Selectionar</button>
             </li>
          {% endfor %}
       </ul>
@@ -88,9 +89,14 @@
    <script>
       $(document).ready(function() {
             $('.select-animal-btn').click(function() {
-            var animalId = $(this).data('animal-id');
-            $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
-      });
+               var animalId = $(this).data('animal-id');
+               $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta
+               
+            });
+
+            let selectedAnimal = "#data-animal-id_" + $('#animalIdInput').val();
+            console.log(selectedAnimal);
+            $(selectedAnimal).trigger('change');     
 
       });
    </script>

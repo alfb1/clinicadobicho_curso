@@ -1,0 +1,28 @@
+
+
+    Modulo agendar consulta :
+
+
+
+    Pesquisa Cliente (cpf)
+                    Cliente Encontrado :
+                      Preenche dados do cliente
+                      Preenche lista de animais
+                      Cliente nao encontrado :
+                      Cadastro Cliente
+                      Preenche dados do cliente
+
+    Adicionar Animal 
+                   Cadastra animal
+                   Preenche lista de animais
+                   seleciona animal para consulta
+                   
+    Seleciona veterinario
+
+    cadastra data
+    cadastra motivo
+    cadastra observaçoes
+    pressiona o botao agendar
+       
+      
+                               
