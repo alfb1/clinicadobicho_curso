@@ -12,7 +12,7 @@ def agendar_consulta(request):
     cliente = None
     animais = None 
     # animal foi cadastrado durange o agendamento
-    id_animal = 0
+    id_animal_select = 0
     # For add_animal_modal
     form_pet = AnimalForm()
     # For add_cliente_modal
@@ -26,7 +26,7 @@ def agendar_consulta(request):
                         
             try:
                 cliente  = Cliente.objects.get(cpf=cpf)
-                id_animal= request.POST.get("animal")
+                id_animal_select = request.POST.get("animal")
                 animais  = cliente.animais.filter(doneo=cliente)
                
             except Cliente.DoesNotExist:
@@ -48,7 +48,7 @@ def agendar_consulta(request):
                   {'form': form, 
                    'cliente' : cliente,  
                    'animais':animais,
-                   'id_animal':id_animal,
+                   'id_animal_select':id_animal_select,
                    'form_pet' : form_pet,
                    'form_cliente' : form_cliente },  )
 

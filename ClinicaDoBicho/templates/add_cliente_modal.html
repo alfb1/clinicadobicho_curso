@@ -23,30 +23,3 @@
     </div>
 
 </div>
-
-<script>
-    $(document).on("submit", "#clienteForm", function(e){
-        e.preventDefault();
-
-        $.ajax({
-
-            url: "{% url 'add_cliente' %}",
-            method: "POST",
-            data: $(this).serialize(),
-            success: function(response){
-                // fehar o modal do cliente
-                $("#clienteModal").modal("hide");
-                // setar cliente no form pesquisa cpf da tela de agendamento
-                $("#cpfInput").val(response.cpf);
-                // Faz o click no formulario de pesquisa
-                $('#searchCpfBtn').trigger('click');
-            },
-            error : function(xhr){
-                alert("Erro: " + xhr.responseJSON.errors);
-            }
-
-        });
-    });
-
-
-</script>

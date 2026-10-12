@@ -8,7 +8,7 @@
    <form class="row g-3 mb-4" method="post">
       {% csrf_token %}
       <input type="hidden" id="clienteIdInput" />
-      <input type="hidden" id="animalIdInput" name="animal" value="{{ id_animal }} "/>
+      <input type="hidden" id="animalIdInput" name="animal" value="{{ id_animal_select }} "/>
       <div class="col-auto">
          <label for="cpfInput" class="visually-hidden">Cliente CPF</label>
          <input type="text" class="form-control" id="cpfInput" name="cpf" placeholder="Informe o Cpf da pesquisa.">
@@ -17,14 +17,17 @@
       <div class="col-auto">
          <button type="submit" name="buscar" id="searchCpfBtn" class="btn btn-primary">Pesquisar</button>
       </div>
+
+      <div class="col-auto">
+         <button type="button" 
+               class="btn btn-success" 
+               data-bs-toggle="modal"
+               data-bs-target="#clienteModal">
+               +
+         </button>
+      </div>
    </form>
 
-   <button type="button" 
-         class="btn btn-success" 
-         data-bs-toggle="modal"
-         data-bs-target="#clienteModal">
-         Adicionar Cliente 
-   </button>
 
 {% if cliente %}
    <!-- Cliente-->
@@ -57,8 +60,14 @@
          {% for animal in animais %}
             <li class="list-group-item">
                <strong>{{ animal.nome }}</strong> / {{ animal.raca }}
-               <button type="button" class="btn btn-info btn-sm select-animal-btn" 
-                         id="data-animal-id_{{ animal.id }}">Selectionar</button>
+               {% comment %}
+               # utilizado pelo jquery para identificar o botao pressionado
+               # data-animal-id : $this.data('animalId').val()
+               {% endcomment %}
+               <button type="button" 
+                       class="btn btn-info btn-sm select-animal-btn" 
+                       data-animal-id="{{ animal.id }}"
+                         >Selectionar</button>
             </li>
          {% endfor %}
       </ul>
@@ -67,6 +76,67 @@
    {% endif %}
 
    {% include 'add_animal_modal.html' %}
+
+
+   
+   <!--- Jquery for add_animal_modal.html -->
+   {% comment %}
+   Formulario Animal
+   Chama a view add_animal
+   Passa os dados do formulario
+   Fecha a tela animalModal
+   seta o campo cpfInput do formulario de pesquisa de cliente
+   seta o campo animalIdInput do formulario de pesquisa de cliente para junto como o cpf reconstruir a tela
+   de agendamento e selecionar o animal que foi cadastrado
+   {% endcomment %}
+   <script>
+      $('#animalForm').submit(function(e){
+         e.preventDefault();
+         $.ajax({
+               url:"/add_animal/",
+               method:"POST",
+               data:$(this).serialize(),
+               success:function(data){
+
+                  // close Modal Form
+                  $('#animalModal').modal('hide');
+
+                  /*
+
+                  // add new animal to list
+         
+                  let html_option = `<li class="list-group-item">
+                                       <strong>${data.nome}</strong> / ${data.raca}
+                                       <button type="button" class="btn btn-info btn-sm select-animal-btn"
+                                             id="data-animal-id_${data.id}">Selecionar
+                                       </button>
+                                    </li>`;
+
+                  // Animal list                    
+                  $('#animalList').append(html_option);
+
+                  let newOption = new Option(data.nome, data.id, true, true);
+
+                  $('#id_animal').append(newOption).trigger('change');
+
+                  */
+
+                  // executa nova pesquisa no cpf do cliente agora para 
+                  // trazer a lista de animais
+                  $("#cpfInput").val($("#cpfInputAnimalModal").val());
+                  $("#animalIdInput").val(data.id);
+                  
+                  // Faz o click no formulario de pesquisa
+                  $('#searchCpfBtn').trigger('click');
+
+               },
+               error:function(xhr){
+                  alert('Erro ao adicionar animal');
+               }
+         });
+      });
+   </script>
+
    
 {% endif %}
 <!-- Form Agendar -->
@@ -86,24 +156,69 @@
    </form>
 
    <!--- Jquery-->
+
+   {% comment %}
+   Cria o evento de click no botao selecionar animal
+   Selecionar o animal, caso tenha sido cadastrado anteriormente em add_animal_modal
+   limpa o campo animalIdInput para evitar erro na selecao entre envios do formulario pesquisa cliente
+   {% endcomment %}
    <script>
       $(document).ready(function() {
             $('.select-animal-btn').click(function() {
-               var animalId = $(this).data('animal-id');
-               $('#id_animal').val(animalId); // Define o valor do campo oculto no form agendar_consulta acima
-               
+               // Recebe o id do botao pressionado via data-animal-id tag
+               var animalId = $(this).data('animalId');
+               // Define o valor do campo id_animal no select do form agendar_consulta acima
+               // nao precisa converter para numero
+               $('#id_animal').val(animalId);           
             });
 
-            let selectedAnimal = "#data-animal-id_" + $('#animalIdInput').val();
-            console.log(selectedAnimal);
-            $(selectedAnimal).trigger('change');     
-
+            // Recebe o campo animalIdInput vindo do form busca cpf
+            // precisa converter para numero
+            var animalIdInput = Number($('#animalIdInput').val());
+            $('#id_animal').val(animalIdInput);  
+            //Limpa a referencia do animal
+            $('#animalIdInput').val("");
+              
       });
    </script>
 
 {% endif %}
 
 {% include 'add_cliente_modal.html' %}
+
+<!--- Jquery for add_cliente_modal.html -->
+{% comment %}
+envia o form add_cliente_modal para a view add_cliente 
+fecha a tela add_cliente_modal 
+seta o campo cpfInput com o retorno da view add_cliente 
+executa uma nova pesquisa em buscar clientes
+{% endcomment %}
+
+<script>
+    $(document).on("submit", "#clienteForm", function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "{% url 'add_cliente' %}",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(response){
+                // fehar o modal do cliente
+                $("#clienteModal").modal("hide");
+                // setar cliente no form pesquisa cpf da tela de agendamento
+                $("#cpfInput").val(response.cpf);
+                // Faz o click no formulario de pesquisa
+                $('#searchCpfBtn').trigger('click');
+            },
+            error : function(xhr){
+                alert("Erro: " + xhr.responseJSON.errors);
+            }
+
+        });
+    });
+
+
+</script>
 
 
 
