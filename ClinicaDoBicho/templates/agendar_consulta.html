@@ -144,16 +144,7 @@
 {% if cliente and animais %}
    <hr>
 
-   <form method="post">
-      {% csrf_token %}
-      {{ form }}
-      <button type="submit" name="salvar" class="btn btn-primary"> 
-         Agendar
-      </button>
-   
-      <a href="{% url 'lista_consultas' %}" class="btn btn-secondary">Cancelar</a> 
-
-   </form>
+   {% include 'agendar_form_agendar.html' %}
 
    <!--- Jquery-->
 
@@ -217,6 +208,108 @@ executa uma nova pesquisa em buscar clientes
         });
     });
 
+    //-- Modal Calendar
+    let calendar_doctor;
+
+    //Funçao simplificada para inicializar o calendario
+
+    function initializeCalendar(){
+      // Obter o ID do veterinario selecionado
+      let veterinarioSelect = document.querySelector('[name="veterinario"]');
+      let veterinarioId = veterinarioSelect ? veterinarioSelect.value : null;
+
+      if (!veterinarioId){
+         altert('Campo veterinário precisa estar preenchido');
+         return;
+      }
+
+      // Body do modal calendar_doctor
+      let calendar_doctor_body = document.getElementById("calendar_doctor_body");
+
+      // Limpar o calendario existente
+
+      if (calendar_doctor){
+         calendar_doctor.destroy();
+      }
+
+      // TODO : 
+      // não permitir data anterior a data atual no back end
+      calendar_doctor = new FullCalendar.Calendar(calendar_doctor_body, {
+         initialView: 'timeGridWeek',
+         locale:'pt-br',
+         events:'/eventos_doctor/?veterinario=' + veterinarioId,
+
+         headerToolbar: {
+            left:'prev,next,today',
+            center:'title',
+            right:'dayGridMonth, timeGridWeek, timeGridDay, listWeek'
+         },
+
+         // Configuraçoes de horario
+         slotMinTime : '08:00:00', //inicio consulta - inicio da agenda
+         slotMaxTime : '17:00:00', //fim consultas - ultimo horario da agenda menos o intervalo
+         slotDuration : '01:00:00', // tempo entre uma linha e outra no horario
+         allDaySlot: false, 
+
+         // Horario de trabalho - menos almoço
+         businessHours : [
+            { daysOfWeek: [1, 2, 3, 4, 5], startTime:'08:00', endTime:'12:00' },
+            { daysOfWeek: [1, 2, 3, 4, 5], startTime:'13:00', endTime:'17:00' },
+         ],
+         // Manipuladores de eventos simplificados
+         dateClick:function(info){
+            //Verificar se é hora de almoço
+            const hour = new Date(info.date).getHours();
+            if (hour == 12){
+               alert("Horário de intervalo");
+               return;
+            }
+            // only acept clicks from valid slots
+            if ('event' in info ){
+                  if (info.event.title === "Disponível"){
+                     // Seleionar horário disponível
+                     //const dataFormatada = info.event.start.toISOString().slice(0,16).replace('T','');
+                     const dataFormatada = info.event.start.toISOString().slice(0,16);
+                     document.querySelector('[name="data"]').value = dataFormatada;
+                     $('#calendar_doctor').modal('hide');
+                  }
+            }
+         },
+
+         eventClick:function(info){
+  
+               if (info.event.title === "Disponível"){
+                  // Seleionar horário disponível
+                  //const dataFormatada = info.event.start.toISOString().slice(0,16).replace('T','');
+                  const dataFormatada = info.event.start.toISOString().slice(0,16);
+                  document.querySelector('[name="data"]').value = dataFormatada;
+                  $('#calendar_doctor').modal('hide');
+               }else{
+                  alert("Consulta já agendada: " + info.event.title);
+               }
+
+         },
+
+      });
+
+      setTimeout(function(){
+         calendar_doctor.render()
+      }, 50);
+    }
+
+    // Show vet selected
+    document.addEventListener('DOMContentLoaded', function(){
+      $(document).on('change', '[name="veterinario"]', function(){
+         console.log('Veterinario mudo', $(this).val());
+      })
+    })
+
+    //Initialize calendar when the modal is opened
+    $('#calendar_doctor').on('show.bs.modal', function(){
+      setTimeout(function(){
+         initializeCalendar();
+      }, 200);
+    });
 
 </script>
 

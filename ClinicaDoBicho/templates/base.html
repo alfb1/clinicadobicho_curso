@@ -8,11 +8,23 @@
     <title>Clinica Veterinária Do Bicho</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.9.0/locales-all.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.js"></script>
 
 </head>
 <body>
     
    <div class="container my-5">
+      <div class="d-flex gap-3 
+                  align-content-center 
+                  justify-content-end 
+                  m-2">
+        {% if request.user.is_authenticated %}
+           <a class="btn btn-transparent">Olá, {{request.user.username}}!</a>
+           <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+      </div>
       {% if messages %}
         <div>
         {% for message in messages %}
@@ -31,6 +43,9 @@
       {% endblock %}
    </div>
 
+  {% block scripts %}
+
+  {% endblock %}
 
 </body>
 </html>

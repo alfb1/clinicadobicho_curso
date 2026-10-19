@@ -1,0 +1,48 @@
+{% comment %}
+Formulario para agendar consulta com veterinario
+A consulta é agendada via marcação de dia e horario
+{% endcomment %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="animal">Animal</label>
+        {{ form.animal }}
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="veterinario">Veterinário</label>
+            {{ form.veterinario }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="d-flex">
+                <button type="button" 
+                        class="btn btn-secondary btn-sm" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#calendar_doctor">
+                    Selecionar Data Disponível</button>
+
+                <div class="ms-2">
+                    <label for="data">Data</label>
+                    {{ form.data }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="mb-3">
+        <label for="motivo">Motivo</label>
+        {{ form.motivo }}
+    </div>
+    <div class="mb-3">
+        <label for="observacoes">Observações</label>
+        {{ form.observacoes }}
+    </div>
+    <!-- {{ form.as_p }} -->
+    <button type="submit" name="salvar" class="btn btn-primary">Agendar</button>
+    {% comment %} <a href="{% url 'lista_consultas' %}" class="btn btn-secondary">Cancelar</a> {% endcomment %}
+</form>
+
+{% include 'calendar_doctor_modal.html' %}

@@ -4,26 +4,29 @@
 
 <div class="container my-5">
     <h1 class="mb-4">Animais</h1>
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
+    <div class="row">
+       {% for animal in animais %}
+        <div class="col-md-4 mb-3">
+           <div class="card">
+                <img src="https://img.freepik.com/fotos-premium/gatinho-cinza-pequeno-em-branco_136670-1667.jpg" 
+                     class="card-img-top" alt="{{ animal.nome }}">
 
-            <tr>
-                <th>Nome</th>
-                <th>Especie</th>
-                <th>Raça</th>
-            </tr>
-
-        </thead>
-
-        <tbody>
-        {% for animal in animais %}
-        <tr>
-            <td>{{ animal.nome }}</td>
-            <td>{{ animal.get_especie_display }}</td>
-            <td>{{ animal.raca }}</td>
-        </tr>
+                <div class="card-body">
+                    <h5 class="card-title">{{ animal.nome }}</h5>
+                    <p class="card-text"> Espécie: {{ animal.get_especie_display }}<br>
+                                        Raça: {{ animal.raca }}
+                    </p>
+                    <p>
+                    Dono: {{ animal.dono.nome }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <div class="col-12 text-center">
+            Nenhum animal cadastrado.
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 </div>
 {% endblock %}
