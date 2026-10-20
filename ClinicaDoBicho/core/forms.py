@@ -12,7 +12,7 @@ class ConsultaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['animal'].disabled = True
+        self.fields['animal'].widget.attrs.update({"disabled":"disabled"}) 
         for field in self.fields.values():
             field.widget.attrs.update({'class':'form-control'})
 

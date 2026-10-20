@@ -28,6 +28,10 @@ class Animal(models.Model):
     def __str__(self):
         return f"{self.nome}({self.especie})"
 
+    @property 
+    def get_especie_nome(self):
+        return dict(self.ESPECIES).get(self.especie,'Desconhecido')
+
 class Veterinario(models.Model):
     nome = models.CharField(max_length=100)
     crmv = models.CharField(max_length=200)

@@ -3,7 +3,7 @@ Formulario para agendar consulta com veterinario
 A consulta é agendada via marcação de dia e horario
 {% endcomment %}
 
-<form method="POST">
+<form method="POST" id="id_form_schedule">
     {% csrf_token %}
     <div class="mb-3">
         <label for="animal">Animal</label>

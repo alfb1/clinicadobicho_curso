@@ -36,6 +36,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Permitir todas as origens (para teste)
+CORS_ALLOW_ALL_ORIGINS = True
+# Ou, para mais segurança, permitir apenas seu app:
+# CORS_ALLOWED_ORIGINS = [
+# "http://localhost:8100", 
+# "http://localhost:4200",
+# ]
 
 # Application definition
 
@@ -47,9 +54,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'rest_framework', # Rest
+    'rest_framework.authtoken', # Rest
+    'corsheaders',    # cors
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Cors - Colocar no topo
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -108,6 +119,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
@@ -136,3 +159,4 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+

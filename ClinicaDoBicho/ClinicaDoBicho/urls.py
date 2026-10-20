@@ -16,8 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from core.api.views import ClienteViewSet, AnimalViewSet, VeterinarioViewSet, ConsultaViewSet
+from core.api.auth import MyTokenObtainPairView
+
+router = routers.DefaultRouter()
+router.register(r'clientes', ClienteViewSet, basename="cliente")
+router.register(r'animais', AnimalViewSet, basename="animal")
+router.register(r'veterinarios', VeterinarioViewSet, basename="veterinario")
+router.register(r'consultas', ConsultaViewSet, basename="consulta")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    path("api/", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls")),
+    path("api/login/",MyTokenObtainPairView.as_view(), name="token_obtain_pai" ),
 ]
+
+
+

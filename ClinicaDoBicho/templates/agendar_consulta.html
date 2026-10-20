@@ -141,6 +141,8 @@
 {% endif %}
 <!-- Form Agendar -->
 
+
+
 {% if cliente and animais %}
    <hr>
 
@@ -225,9 +227,16 @@ executa uma nova pesquisa em buscar clientes
 
       // Body do modal calendar_doctor
       let calendar_doctor_body = document.getElementById("calendar_doctor_body");
+      
+      // functions to convert an event object into a date_time string
+      function get_date_time_calendar(info){
+                  const str = info.event.start;
+                  const str_date = str.toISOString().slice(0,10);
+                  const str_time = str.toTimeString().slice(0,8);
+                  return str_date +'T'+ str_time ; 
+      }
 
       // Limpar o calendario existente
-
       if (calendar_doctor){
          calendar_doctor.destroy();
       }
@@ -269,7 +278,7 @@ executa uma nova pesquisa em buscar clientes
                   if (info.event.title === "Disponível"){
                      // Seleionar horário disponível
                      //const dataFormatada = info.event.start.toISOString().slice(0,16).replace('T','');
-                     const dataFormatada = info.event.start.toISOString().slice(0,16);
+                     const dataFormatada = get_date_time_calendar(info);
                      document.querySelector('[name="data"]').value = dataFormatada;
                      $('#calendar_doctor').modal('hide');
                   }
@@ -280,13 +289,14 @@ executa uma nova pesquisa em buscar clientes
   
                if (info.event.title === "Disponível"){
                   // Seleionar horário disponível
-                  //const dataFormatada = info.event.start.toISOString().slice(0,16).replace('T','');
-                  const dataFormatada = info.event.start.toISOString().slice(0,16);
+                  const dataFormatada = get_date_time_calendar(info);
                   document.querySelector('[name="data"]').value = dataFormatada;
                   $('#calendar_doctor').modal('hide');
                }else{
                   alert("Consulta já agendada: " + info.event.title);
                }
+
+               return false;
 
          },
 
@@ -311,6 +321,15 @@ executa uma nova pesquisa em buscar clientes
       }, 200);
     });
 
+// handle for enable select id_animal before submit
+// when id_anima is anabled the field is submited to the backend
+     $("#id_form_schedule").on( "submit", function(e){
+        // enable the Animal Select Field before submit
+        $('#id_animal').prop('disabled', false);
+        // continues the submit process
+        return true;
+     })
+ 
 </script>
 
 

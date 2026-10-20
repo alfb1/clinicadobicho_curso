@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required 
 from .forms import ConsultaForm, AnimalForm, ClienteForm
-from .models import Animal, Consulta, Cliente
+from .models import Animal, Consulta, Cliente, Veterinario
 from datetime import datetime, timedelta, date 
 
 
@@ -17,6 +17,8 @@ def str_to_date(arg):
     dia = int(arg[8:10])
     date_conv = date(ano, mes, dia)
     return date_conv
+
+
 
 
 @login_required(login_url='login')
