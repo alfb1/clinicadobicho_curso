@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@angular/common": "^22.2.3",
+    "@angular/forms": "^22.2.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@ionic/storage-angular": "^4.0.0"
+  }
+}
