@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   username = signal('');
   password = signal('');
-  private storage = inject(Storage)
+  private storage:Storage = inject(Storage)
   constructor(
     private api: ApiService,
     private router: Router

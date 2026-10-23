@@ -47,10 +47,11 @@ export class AgendarConsultaPage implements OnInit {
   agendar(){
     const dateConsulta = new Date(this.consulta.data || 0) ;
     const hour = dateConsulta.getHours();
-    const valid_hours = (hour >= 8 && hour < 12) !! ( hour >= 13 && hour < 17)
+    const valid_hours = (hour >= 8 && hour < 12) || ( hour >= 13 && hour < 17)
 
     if ( ! valid_hours ){
-        alert('Horário deve ser entre 08:00-12:00 e 13:00-17:00');
+        console.log("horas", hour)
+        alert('Horário deve ser entre 08:00-12:00 e 13:00-17:00 ');
         return;
     }
 
