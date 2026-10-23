@@ -1,1 +1,35 @@
+jwt authentication
+
 https://simpleisbetterthancomplex.com/tutorial/2018/12/19/how-to-use-jwt-authentication-with-django-rest-framework.html
+
+How to Implement Token Authentication using Django REST Framework
+https://simpleisbetterthancomplex.com/tutorial/2018/11/22/how-to-implement-token-authentication-using-django-rest-framework.html
+
+code vs studio plugins installed
+https://stackoverflow.com/questions/1267528/how-do-i-see-the-list-of-addins-and-plugins-in-visual-studio
+
+Getting started with standalone components
+https://v17.angular.io/guide/standalone-components
+
+Angular List:
+https://www.w3schools.com/angular/angular_lists.asp
+
+The Modern Way to Handle Empty States
+https://blog.devgenius.io/empty-in-angular-the-modern-way-to-handle-empty-states-820476e0e5a4 
+
+Django Rest Framework :
+https://www.django-rest-framework.org/
+
+Angular ngIF :
+https://angular.dev/api/common/NgIf
+
+Forms :
+https://angular.dev/guide/forms
+
+Ionic Framework :
+https://ionicframework.com/docs
+
+
+Django Docs :
+https://docs.djangoproject.com/
+
