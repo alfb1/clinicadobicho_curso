@@ -4,19 +4,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding">
   <ion-list>
-    <ion-card *ngFor="let consulta of consultas" class="consulta-card">
+    @for (consulta of consultas(); track $index) {
+    <ion-card class="consulta-card">
       <ion-card-header>
         <ion-card-subtitle>{{ consulta.data | date:'short' }}</ion-card-subtitle>
-        <ion-card-title>Dono: {{ consulta.animal.doneo.nome }}</ion-card-title>
+        <ion-card-title>Dono: {{ consulta.animal?.doneo.nome }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Nome do Pet: {{ consulta.animal.nome }}</p>
-        <p>Tipo de Espécie: {{ consulta.animal.especie_nome }}</p>
-        <p>Veterinário: {{ consulta.veterinario.nome }}</p>
+        <p>Nome do Pet: {{ consulta.animal!.nome }}</p>
+        <p>Tipo de Espécie: {{ consulta.animal?.especie_nome }}</p>
+        <p>Veterinário: {{ consulta.veterinario?.nome }}</p>
         <p>Motivo: {{ consulta.motivo }} </p>
       </ion-card-content>
     </ion-card>
+    }
+    @empty{
+      <ion-item>
+        No results found.
+      </ion-item>
+    }
   </ion-list>
 </ion-content>

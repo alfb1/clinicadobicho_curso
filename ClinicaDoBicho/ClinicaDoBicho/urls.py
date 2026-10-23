@@ -27,6 +27,7 @@ router.register(r'veterinarios', VeterinarioViewSet, basename="veterinario")
 router.register(r'consultas', ConsultaViewSet, basename="consulta")
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),

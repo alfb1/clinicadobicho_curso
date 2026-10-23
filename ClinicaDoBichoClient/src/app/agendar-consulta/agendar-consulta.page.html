@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Agendar Consulta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen>
+  <!--
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">agendar-consulta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  -->
+  <form (ngSubmit)="agendar()" class="agendar-form">
+
+    <!-- 
+    <ion-item>
+      <ion-label position="floating">Animal</ion-label>
+      <ion-input type="text" [(ngModel)]="consulta.animal" name="animal" required></ion-input>
+    </ion-item>
+     -->
+      
+     <ion-item>
+      <ion-select label="Animal" placeholder="Selecione o animal" 
+                  type="number" 
+                  [(ngModel)]="consulta.animal" 
+                  id="animal"
+                  name="animal" required>
+        @for (animal of animais; track animal.id){
+        <ion-select-option value="{{animal.id}}">
+          {{ animal.nome }}
+        </ion-select-option>
+        }
+      </ion-select>
+    
+    </ion-item>
+   
+
+     <!--  
+    <ion-item>
+      <ion-label position="floating">Veterinário</ion-label>
+      <ion-input type="text" [(ngModel)]="consulta.veterinario" name="animal" required></ion-input>
+    </ion-item>
+       -->
+    <ion-item>
+      <ion-select label="Veterinário" 
+                  placeholder="Selecione o veterinaio" 
+                  [(ngModel)]="consulta.veterinario"
+                  id="veterinario" name="veterinario" required>
+        @for (veterinario of veterinarios; track veterinario.id){
+        <ion-select-option value="{{veterinario.id}}">
+          {{ veterinario.nome }}
+        </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+    <ion-datetime [(ngModel)]="consulta!.data"
+                  name="data"
+                  display-format="DD/MM/YYYY HH:mm"
+                  picker-format="DD/MM/YYYY HH:mm"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Motivo</ion-label>
+      <ion-textarea id="motivo"
+                    [(ngModel)]="consulta!.motivo" 
+                    required name="motivo"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Observações</ion-label>
+      <ion-textarea id="observacaos"
+                    [(ngModel)]="consulta!.observacoes" 
+                    required name="observacoes"></ion-textarea>
+    </ion-item>
+    <ion-button expand="block" color="success" shape="round" type="submit">
+      <ion-icon name="checkmark-circle-outline" slot="start">
+      </ion-icon> Agendar
+    </ion-button>
+  </form>
+</ion-content>

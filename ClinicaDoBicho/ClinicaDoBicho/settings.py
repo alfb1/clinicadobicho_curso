@@ -37,12 +37,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Permitir todas as origens (para teste)
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 # Ou, para mais segurança, permitir apenas seu app:
-# CORS_ALLOWED_ORIGINS = [
-# "http://localhost:8100", 
-# "http://localhost:4200",
-# ]
+CORS_ALLOWED_ORIGINS = [
+ "http://localhost:8100", 
+ "http://localhost:4200",
+ ]
 
 # Application definition
 

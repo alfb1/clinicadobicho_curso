@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Consulta } from "../models/Consulta.model";
-import { IonContent, IonHeader, IonTitle, IonItem, IonLabel, IonInput,
+import { IonContent, IonHeader, IonTitle, IonItem, IonLabel, 
          IonToolbar, IonButton, IonList, 
          IonCard, IonCardHeader,IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/angular';
 import { ApiService } from "../services/api.service";
@@ -13,27 +13,30 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports:[
     CommonModule,
-    IonContent, IonHeader, IonTitle, IonToolbar, IonList, 
+    IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem,
     IonCard, IonCardHeader,IonCardSubtitle, IonCardTitle, IonCardContent
   ]
 })
+
 export class ConsultasPage implements OnInit {
 
-  consultas : Consulta[]=[];
+  consultas = signal<Consulta[]>([]);
   private api = inject(ApiService)
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.getConsultas();
+      this.getConsultas(); 
   }
 
   getConsultas(){
    this.api.getConsultas()
-            .subscribe(
-              (data:Consulta[]) => {this.consultas = data; console.log("consulta",data)},
-              err => console.error('Erro ao buscar consultas: ', err)
-            )
-            
+           .subscribe(
+              (data) =>{
+                           this.consultas.set(data); 
+                           console.log("consulta this.consultas", this.consultas())
+                       },
+              (err:Error) => console.error('Erro ao buscar consultas: ', err)
+            )        
   }
 
 }

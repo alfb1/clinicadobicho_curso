@@ -28,3 +28,17 @@ class ConsultaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consulta
         fields = '__all__'
+
+class ConsultaAddSerializer(serializers.ModelSerializer):
+                         
+    animal = serializers.PrimaryKeyRelatedField(
+        queryset = Animal.objects.all(), write_only=True
+    )
+                              
+    veterinario = serializers.PrimaryKeyRelatedField(
+        queryset = Veterinario.objects.all(), write_only=True
+    )
+
+    class Meta:
+        model = Consulta
+        fields = '__all__'

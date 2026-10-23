@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'consultas',
     loadComponent: () => import('./consultas/consultas.page').then( m => m.ConsultasPage)
   },
+  {
+    path: 'agendar-consulta',
+    loadComponent: () => import('./agendar-consulta/agendar-consulta.page').then( m => m.AgendarConsultaPage)
+  },
 ];
 
 @NgModule({

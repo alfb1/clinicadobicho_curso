@@ -1,7 +1,7 @@
 import {Dono} from "./Dono.model";
 
 export interface Animal{
-            id: number;
+            id?: number;
             nome: string;
             especie: string;
             especie_nome: string;
